@@ -20,7 +20,7 @@
 | 1. Arquitetura Produto (ISO 10746) | 3 | Vinicius Ibiapina + Thiago Gomes | Mapear arquitetura **atual** do produto Jacto |
 | 2. Configuração da Esteira de Sistemas | 3 | Daniel Augusto + Lucas Nunes | Levantar como a esteira **funciona hoje** |
 | 3. Requisitos SCM (Registros, Evidências, Expectativas) | 3 | Thiago Volcati + João Souza | Coletar evidências e expectativas do parceiro |
-| 4. Referências + Coordenação | 1 | Matheus Santos + Pedro Henrique | Consolidar fontes, normas e costurar o doc final |
+| 4. Automação de contexto de IA + fluxo de trabalho | 1 | Matheus Santos + Pedro Henrique | Tooling transversal que acelera as outras 3 frentes |
 
 **Total:** 10 pontos / 8 pessoas (4 duplas).
 
@@ -95,28 +95,29 @@
 
 ---
 
-## Frente 4 — Referências + Coordenação [1 pt + costura]
+## Frente 4 — Automação de contexto de IA + fluxo de trabalho [1 pt]
 
 **Dupla:** Matheus Santos + Pedro Henrique
-**Pergunta-guia:** "Que evidências e normas sustentam o que estamos descrevendo?"
+**Pergunta-guia:** "Como reduzimos atrito do time e damos contexto consistente para IA acelerar o trabalho das outras frentes?"
 
-### 4.1 Evidências do parceiro
-- Consolidar todas as fontes do parceiro: [tapi.md](tapi.md), transcrições de reuniões em [notes/](notes/), screenshots, e-mails, calls.
-- Catalogar cada citação/dado usado nas frentes 1, 2 e 3 com referência rastreável.
+> Esta frente é **transversal**: o output dela é tooling/infra que as Frentes 1, 2 e 3 consomem ao longo da semana. Não produz seção do artefato final por si só, mas ergue o piso de produtividade do time.
 
-### 4.2 Normas de Engenharia
-- ISO 10746 (RM-ODP) — base da Frente 1.
-- IEEE 828 / ISO/IEC 12207 — gestão de configuração de software.
-- Regulamentação ANAC aplicável a software de drones.
-- Boas práticas de CI/CD (referenciadas nas aulas, ver [slides-prog/](slides-prog/)).
+### 4.1 Automação do board GitLab (criação de issues)
+- Implementar a **Opção 2** documentada em [POSSIVEIS-FORMAS-DE-AUTOMATIZAR-A-ORGANIZACAO-DE-TAREFAS.md](POSSIVEIS-FORMAS-DE-AUTOMATIZAR-A-ORGANIZACAO-DE-TAREFAS.md): script `glab` que cria as 4 epics + sub-issues do Sprint 1 com labels, milestone e assignees.
+- Versionar o script no repo (`scripts/create-sprint1-issues.sh`) para reuso nas Sprints 2–5.
+- Coletar os 4 inputs listados no doc (URL do projeto, usernames GitLab, board, milestone).
 
-### 4.3 Coordenação e consolidação (atividade contínua)
-- Garantir consistência terminológica entre as 3 frentes.
-- Resolver conflitos quando duas frentes descrevem o mesmo processo de formas diferentes.
-- Montar o documento final com formatação coesa.
-- Conduzir as syncs do time (ritual diário/duas vezes na semana).
+### 4.2 Contexto compartilhado de IA para o time
+- Criar um `CLAUDE.md` (ou equivalente para outras IAs) na raiz do repo com o contexto destilado: sumário do projeto Jacto, glossário (drone, firmware, controle, MATLAB, PX4, ANAC), links para [tapi.md](tapi.md) e [notes/](notes/), e princípios do Sprint 1 (AS-IS, evidência sempre, etc.).
+- Padronizar uma estrutura `evidencias/` ou anotações que qualquer membro pode citar com link rastreável (`notes/<frente>/<data>-<topico>.md`), garantindo que a regra "citar fonte sempre" funcione na prática.
+- Documentar 2–3 prompts/templates úteis para as outras frentes (ex.: "extrair requisitos de uma transcrição", "transformar nota em registro estruturado").
 
-**Entregável:** seção de Referências + documento Sprint 1 consolidado.
+### 4.3 Templates e helpers para padronização do artefato
+- Criar template Markdown para cada seção do artefato Sprint 1 (Frentes 1–3) com headers, checklist do que preencher e onde citar fonte. Cada dupla preenche o seu, garantindo consistência sem ter um "consolidador" centralizado.
+- Definir convenção de citação de evidências (`[E#](notes/...)`) e de expectativas do parceiro (`[Exp#]`) para o documento final ficar coeso.
+- Validar a junção dos templates ao final da semana (revisão final, não autoria).
+
+**Entregável:** scripts e templates versionados no repo + `CLAUDE.md` atualizado. **Não** entrega seção do artefato Sprint 1 — apenas habilita as outras 3 frentes a entregarem com menos atrito e a seção "Referências" do artefato a ser composta por todos.
 
 ---
 
@@ -124,11 +125,11 @@
 
 | Dia | Frente 1 | Frente 2 | Frente 3 | Frente 4 |
 |---|---|---|---|---|
-| 1 | Coletar dados de funcionalidades atuais | Listar testes existentes | Levantar ferramentas atuais | Indexar fontes + normas |
-| 2 | NFRs atuais + ciclo de controle | Mapear fluxo de testes hoje | Mapear deployment atual | Validar consistência inicial |
-| 3 | Documentar viewpoints ISO 10746 | Rastreabilidade atual | Indicadores hoje + expectativas | Costura parcial |
-| 4 | Revisão cruzada com Frentes 2 e 3 | Revisão cruzada | Revisão cruzada | Revisão geral |
-| 5 | Ajustes finais | Ajustes finais | Ajustes finais | Consolidação e entrega |
+| 1 | Coletar dados de funcionalidades atuais | Listar testes existentes | Levantar ferramentas atuais | Script glab + CLAUDE.md inicial |
+| 2 | NFRs atuais + ciclo de controle | Mapear fluxo de testes hoje | Mapear deployment atual | Templates de seção das Frentes 1–3 |
+| 3 | Documentar viewpoints ISO 10746 | Rastreabilidade atual | Indicadores hoje + expectativas | Convenção de citação + estrutura `evidencias/` |
+| 4 | Revisão cruzada com Frentes 2 e 3 | Revisão cruzada | Revisão cruzada | Suporte às frentes (ajustes de tooling) |
+| 5 | Ajustes finais | Ajustes finais | Ajustes finais | Revisão da junção + checagem de citações |
 
 ---
 
@@ -141,6 +142,7 @@
    - **Evidência:** algo observado/relatado em reunião.
    - **Expectativa:** algo que o parceiro disse que quer/espera (vai virar requisito futuro).
 4. **Citar fonte sempre.** Toda afirmação no documento deve linkar para a evidência em [notes/](notes/) ou [tapi.md](tapi.md).
+5. **Cada dupla é dona das suas referências.** Não há frente dedicada a consolidar bibliografia — a seção "Referências" [1 pt] do artefato é composta por agregação das fontes citadas em cada frente. A Frente 4 fornece o template/convenção, mas não autora a seção.
 
 ---
 
